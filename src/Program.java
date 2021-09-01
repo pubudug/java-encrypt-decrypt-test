@@ -14,7 +14,7 @@ public class Program {
             UnrecoverableKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
         if (args.length != 3) {
             System.out.println("Usage\n" +
-                    "java Program.class <keystore-file> <cihpertext> <alias>");
+                    "java Program.class <keystore-file> <key-alias> <ciphertext>");
         }
 
         KeyStore serverKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -23,10 +23,10 @@ public class Program {
         char[] password = System.console().readPassword("Keystore password: ");
         serverKeyStore.load(stream, password);
 
-        Key key = serverKeyStore.getKey(args[2], password);
+        Key key = serverKeyStore.getKey(args[1], password);
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
         cipher.init(Cipher.DECRYPT_MODE, key);
-        System.out.println(new String(cipher.doFinal(Base64.getDecoder().decode(args[1]))));
+        System.out.println(new String(cipher.doFinal(Base64.getDecoder().decode(args[2]))));
     }
 }
