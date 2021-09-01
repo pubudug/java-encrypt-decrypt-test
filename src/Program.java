@@ -12,9 +12,9 @@ public class Program {
     public static void main(String[] args) throws IOException, KeyStoreException,
             CertificateException, NoSuchAlgorithmException, InvalidKeyException,
             UnrecoverableKeyException, NoSuchPaddingException, BadPaddingException, IllegalBlockSizeException {
-        if (args.length != 2) {
+        if (args.length != 3) {
             System.out.println("Usage\n" +
-                    "java Program.class <keystore-file> <cihpertext>");
+                    "java Program.class <keystore-file> <cihpertext> <alias>");
         }
 
         KeyStore serverKeyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -23,7 +23,7 @@ public class Program {
         char[] password = System.console().readPassword("Keystore password: ");
         serverKeyStore.load(stream, password);
 
-        Key key = serverKeyStore.getKey("server", password);
+        Key key = serverKeyStore.getKey(args[2], password);
         Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
 
         cipher.init(Cipher.DECRYPT_MODE, key);
