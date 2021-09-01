@@ -1,9 +1,10 @@
 Commands used to genearate the key pair and the cert
 
 keytool -genkey -v -keystore server-keystore -alias server -keyalg RSA -keysize 2048 -validity 10000
+
 keytool -export -alias server -file server.cer -keystore server-keystore
 
-To run the pogram,
+To run the program,
 
 javac Program.java
 
